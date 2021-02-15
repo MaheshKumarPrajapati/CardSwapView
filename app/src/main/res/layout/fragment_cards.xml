@@ -62,14 +62,14 @@
 
             </RelativeLayout>
 
-            <com.mahesh_prajapati.itunes.utils.cardstack.CardStackView
+            <com.mahesh_prajapati.cardswapview.CardStackView
                 android:id="@+id/card_stack_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/button_container"
                 android:padding="4dp"
                 android:clipToPadding="false">
-            </com.mahesh_prajapati.itunes.utils.cardstack.CardStackView>
+            </com.mahesh_prajapati.cardswapview.CardStackView>
 
             <ProgressBar
                 android:id="@+id/progressBar"

@@ -12,4 +12,8 @@ class CardActivity : AppCompatActivity(){
         setContentView(R.layout.activity_card)
 
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
 }

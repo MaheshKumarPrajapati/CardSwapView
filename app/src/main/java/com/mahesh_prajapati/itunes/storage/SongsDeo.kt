@@ -2,10 +2,7 @@ package com.mahesh_prajapati.itunes.storage
 
 import androidx.annotation.Nullable
 import androidx.room.*
-import com.mahesh_prajapati.itunes.storage.model.Id
-import com.mahesh_prajapati.itunes.storage.model.Result
 import com.mahesh_prajapati.itunes.storage.model.ResultX
-import org.jetbrains.annotations.NotNull
 
 @Dao
 interface SongsDeo {

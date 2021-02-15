@@ -1,2 +1,3 @@
+include ':CardSwapView'
 rootProject.name='Retrofit-Kotlin-Coroutines-Example'
 include ':app'

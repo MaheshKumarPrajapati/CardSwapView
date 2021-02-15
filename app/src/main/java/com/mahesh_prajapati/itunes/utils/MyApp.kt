@@ -6,7 +6,7 @@ class MyApp : Application() {
 
     companion object {
 
-        var mCurrentPosition: Int = 0
+        var isFirstTime: Boolean=true
 
         @JvmField
         var appInstance: MyApp? = null

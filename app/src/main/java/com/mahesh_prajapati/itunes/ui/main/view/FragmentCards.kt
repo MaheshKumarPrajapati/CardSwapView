@@ -8,15 +8,13 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
 import android.widget.Toast
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DiffUtil
+import com.mahesh_prajapati.cardswapview.*
 import com.mahesh_prajapati.itunes.coroutines.R
 import com.mahesh_prajapati.itunes.data.api.ApiHelper
 import com.mahesh_prajapati.itunes.data.api.RetrofitBuilder
@@ -24,17 +22,22 @@ import com.mahesh_prajapati.itunes.storage.model.ResultX
 import com.mahesh_prajapati.itunes.ui.base.ViewModelFactory
 import com.mahesh_prajapati.itunes.ui.main.adapter.CardStackAdapter
 import com.mahesh_prajapati.itunes.ui.main.viewmodel.MainViewModel
-import com.mahesh_prajapati.itunes.utils.AppConstants
+import com.mahesh_prajapati.itunes.utils.MyApp
 import com.mahesh_prajapati.itunes.utils.SpotDiffCallback
 import com.mahesh_prajapati.itunes.utils.Status
-import com.mahesh_prajapati.itunes.utils.cardstack.*
-import kotlinx.android.synthetic.main.activity_card.*
 import kotlinx.android.synthetic.main.fragment_cards.*
+import java.lang.Exception
 
-class FragmentCards: Fragment() , CardStackListener {
+class FragmentCards: Fragment(),
+    com.mahesh_prajapati.cardswapview.CardStackListener {
     private lateinit var viewModel: MainViewModel
 
-    private val manager by lazy { CardStackLayoutManager(activity, this) }
+    private val manager by lazy {
+        CardStackLayoutManager(
+            activity!!,
+            this
+        )
+    }
     var list:List<ResultX> =ArrayList()
     private val adapter by lazy { CardStackAdapter(activity!!,list) }
 
@@ -50,7 +53,11 @@ class FragmentCards: Fragment() , CardStackListener {
         val view= inflater.inflate(R.layout.fragment_cards, container, false)
         retainInstance=true
         setupViewModel()
-        createSpots()
+        if(MyApp.isFirstTime){
+            createSpots()
+        }else{
+            getDataFromDB()
+        }
         return view
     }
 
@@ -97,24 +104,29 @@ class FragmentCards: Fragment() , CardStackListener {
     }
 
     private fun initialize() {
-        manager.setStackFrom(StackFrom.None)
-        manager.setVisibleCount(3)
-        manager.setTranslationInterval(8.0f)
-        manager.setScaleInterval(0.95f)
-        manager.setSwipeThreshold(0.3f)
-        manager.setMaxDegree(20.0f)
-        manager.setDirections(Direction.HORIZONTAL)
-        manager.setCanScrollHorizontal(true)
-        manager.setCanScrollVertical(true)
-        manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
-        manager.setOverlayInterpolator(LinearInterpolator())
-        card_stack_view.layoutManager = manager
-        card_stack_view.adapter = adapter
-        card_stack_view.itemAnimator.apply {
-            if (this is DefaultItemAnimator) {
-                supportsChangeAnimations = false
+        try{
+            manager.setStackFrom(com.mahesh_prajapati.cardswapview.StackFrom.None)
+            manager.setVisibleCount(3)
+            manager.setTranslationInterval(8.0f)
+            manager.setScaleInterval(0.95f)
+            manager.setSwipeThreshold(0.3f)
+            manager.setMaxDegree(20.0f)
+            manager.setDirections(com.mahesh_prajapati.cardswapview.Direction.HORIZONTAL)
+            manager.setCanScrollHorizontal(true)
+            manager.setCanScrollVertical(true)
+            manager.setSwipeableMethod(com.mahesh_prajapati.cardswapview.SwipeableMethod.AutomaticAndManual)
+            manager.setOverlayInterpolator(LinearInterpolator())
+            card_stack_view.layoutManager = manager
+            card_stack_view.adapter = adapter
+            card_stack_view.itemAnimator.apply {
+                if (this is DefaultItemAnimator) {
+                    supportsChangeAnimations = false
+                }
             }
+        }catch (e:Exception){
+
         }
+
     }
 
     private fun paginate() {
@@ -134,6 +146,7 @@ class FragmentCards: Fragment() , CardStackListener {
                     Status.SUCCESS -> {
                         //  recyclerView.visibility = View.VISIBLE
                         progressBar.visibility = View.GONE
+                        MyApp.isFirstTime=false
                         resource.data?.let { songs ->
                             viewModel.setCondidatesToDataBase(activity!!,songs)
                         }
@@ -230,17 +243,17 @@ class FragmentCards: Fragment() , CardStackListener {
     }
 
 
-    override fun onCardDragging(direction: Direction, ratio: Float) {
-        Log.d("CardStackView", "onCardDragging: d = ${direction.name}, r = $ratio")
+    override fun onCardDragging(direction: com.mahesh_prajapati.cardswapview.Direction?, ratio: Float) {
+        Log.d("CardStackView", "onCardDragging: d = ${direction!!.name}, r = $ratio")
     }
 
-    override fun onCardSwiped(direction: Direction) {
+    override fun onCardSwiped(direction: com.mahesh_prajapati.cardswapview.Direction?) {
         Log.d("CardStackView", "onCardSwiped: p = ${manager.topPosition}, d = $direction")
         if (manager.topPosition == adapter.itemCount - 5) {
             paginate()
         }
         var result=adapter.getetCurrentItem()
-        result!!.selectVal=if(result.selectVal==null || result.selectVal==0){if(direction==Direction.Left){-1}else{1}}else{0}
+        result!!.selectVal=if(result.selectVal==null || result.selectVal==0){if(direction== com.mahesh_prajapati.cardswapview.Direction.Left){-1}else{1}}else{0}
         viewModel.updateValueToDB(activity!!,result)
     }
 
@@ -254,15 +267,16 @@ class FragmentCards: Fragment() , CardStackListener {
         Log.d("CardStackView", "onCardCanceled: ${manager.topPosition}")
     }
 
-    override fun onCardAppeared(view: View, position: Int) {
-        val textView = view.findViewById<TextView>(R.id.item_name)
+    override fun onCardAppeared(view: View?, position: Int) {
+        val textView = view!!.findViewById<TextView>(R.id.item_name)
         Log.d("CardStackView", "onCardAppeared: ($position) ${textView.text}")
     }
 
-    override fun onCardDisappeared(view: View, position: Int) {
-        val textView = view.findViewById<TextView>(R.id.item_name)
+    override fun onCardDisappeared(view: View?, position: Int) {
+        val textView = view!!.findViewById<TextView>(R.id.item_name)
         Log.d("CardStackView", "onCardDisappeared: ($position) ${textView.text}")
 
     }
+
 
 }
