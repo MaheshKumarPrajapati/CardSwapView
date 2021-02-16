@@ -52,7 +52,6 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
             }
 
         }
-
     }
 
     fun getCardDataFromDB(context: Context) = liveData(Dispatchers.IO) {

@@ -72,13 +72,6 @@
             </com.mahesh_prajapati.cardswapview.CardStackView>
 
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                />
 
         </RelativeLayout>
 

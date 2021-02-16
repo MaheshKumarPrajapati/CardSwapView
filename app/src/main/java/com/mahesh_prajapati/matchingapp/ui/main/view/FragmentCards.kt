@@ -1,12 +1,10 @@
 package com.mahesh_prajapati.matchingapp.ui.main.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -25,7 +23,6 @@ import com.mahesh_prajapati.matchingapp.ui.main.viewmodel.MainViewModel
 import com.mahesh_prajapati.matchingapp.utils.SpotDiffCallback
 import com.mahesh_prajapati.matchingapp.utils.Status
 import kotlinx.android.synthetic.main.fragment_cards.*
-import java.lang.Exception
 
 class FragmentCards : Fragment(), CardStackListener {
 
@@ -51,9 +48,19 @@ class FragmentCards : Fragment(), CardStackListener {
         val view = inflater.inflate(R.layout.fragment_cards, container, false)
         retainInstance = true
         setupViewUi()
-        getDataFromApi()
+
+        (activity as CardActivity?)!!.setFragmentRefreshListener(object :
+            CardActivity.FragmentRefreshListener {
+            override fun onRefresh() {
+                getDataFromDB()
+            }
+
+        })
+
         return view
     }
+
+
 
 
     private fun setupViewUi() {
@@ -130,53 +137,22 @@ class FragmentCards : Fragment(), CardStackListener {
         result.dispatchUpdatesTo(adapter)
     }
 
-    private fun getDataFromApi() {
-        viewModel.getCardDataFromWebService().observe(this, Observer {
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        progressBar.visibility = View.GONE
-                        resource.data?.let { songs ->
-                            viewModel.setCardDataToDB(activity!!, songs)
-                        }
-                        getDataFromDB()
-                    }
-                    Status.ERROR -> {
-                        progressBar.visibility = View.GONE
-                        getDataFromDB()
-                        Toast.makeText(activity!!, it.message, Toast.LENGTH_LONG).show()
-                    }
-                    Status.LOADING -> {
-                        progressBar.visibility = View.VISIBLE
-                    }
-                }
-            }
-        })
-
-    }
 
     private fun getDataFromDB(): List<ResultX> {
         viewModel.getCardDataFromDB(activity!!).observe(this, Observer {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
-                        progressBar.visibility = View.GONE
                         resource.data?.let { songs ->
                             list = viewModel.filterList(songs)
-
                         }
-                        setupCardStackView()
-                        setupButton()
-                        adapter.setCards(list)
-                        adapter.notifyItemChanged(manager.topPosition)
+                       setUpDataToList()
 
                     }
                     Status.ERROR -> {
-                        progressBar.visibility = View.GONE
                         Toast.makeText(activity, it.message, Toast.LENGTH_LONG).show()
                     }
                     Status.LOADING -> {
-                        progressBar.visibility = View.VISIBLE
                     }
                 }
             }
@@ -184,6 +160,13 @@ class FragmentCards : Fragment(), CardStackListener {
 
         return list
 
+    }
+
+    private fun setUpDataToList() {
+        setupCardStackView()
+        setupButton()
+        adapter.setCards(list)
+        adapter.notifyItemChanged(manager.topPosition)
     }
 
 
@@ -200,7 +183,7 @@ class FragmentCards : Fragment(), CardStackListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.reload -> {
-                getDataFromApi()
+                (activity as CardActivity).getDataFromApi()
                 true
             }
             R.id.history -> {
