@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.mahesh_prajapati.itunes.ui.main.view.DetailsActivity">
+    tools:context="com.mahesh_prajapati.matchingapp.ui.main.view.DetailsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -29,7 +29,7 @@
                 android:background="@color/black">
 
                 <ImageView
-                    android:id="@+id/ivSongPreview"
+                    android:id="@+id/ivCardImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="4dp"

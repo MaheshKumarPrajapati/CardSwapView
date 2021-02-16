@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/frag_cards"
-        android:name="com.mahesh_prajapati.itunes.ui.main.view.FragmentCards"
+        android:name="com.mahesh_prajapati.matchingapp.ui.main.view.FragmentCards"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_cards">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/frag_history"
-        android:name="com.mahesh_prajapati.itunes.ui.main.view.FragmentHistory"
+        android:name="com.mahesh_prajapati.matchingapp.ui.main.view.FragmentHistory"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_history">
 

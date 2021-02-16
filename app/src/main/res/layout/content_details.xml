@@ -5,131 +5,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.mahesh_prajapati.itunes.ui.main.view.CardDetailsActivity"
+    tools:context="com.mahesh_prajapati.matchingapp.ui.main.view.CardDetailsActivity"
     tools:showIn="@layout/activity_details">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSongName"
+            android:id="@+id/tvPersonGender"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivSongPreview"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:gravity="left"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvCollectionName"
+            android:id="@+id/tvPersonAge"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvSongName"
-            app:layout_constraintTop_toBottomOf="@+id/tvSongName" />
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvPersonGender"
+            app:layout_constraintTop_toBottomOf="@+id/tvPersonGender" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSongArtist"
+            android:id="@+id/tvPersonEmail"
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tvCollectionName"
-            app:layout_constraintTop_toBottomOf="@+id/tvCollectionName" />
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvPersonAge"
+            app:layout_constraintTop_toBottomOf="@+id/tvPersonAge"/>
 
-        <View
-            android:id="@+id/view1"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPersonPhone"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvPersonEmail"
+            app:layout_constraintTop_toBottomOf="@+id/tvPersonEmail" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPersonLocation"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvPersonPhone"
+            app:layout_constraintTop_toBottomOf="@+id/tvPersonPhone" />
+
+
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            android:background="#c0c0c0"
-            app:layout_constraintTop_toBottomOf="@+id/tvSongArtist"/>
+            android:layout_height="350dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvPersonLocation"
+            app:layout_constraintTop_toBottomOf="@+id/tvPersonLocation">
 
 
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              app:layout_constraintTop_toBottomOf="@+id/view1"
-              >
-
-
-              <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                  android:weightSum="3">
-
-
-                  <androidx.appcompat.widget.AppCompatTextView
-                      android:id="@+id/tvSongDuration"
-                      style="@style/TextAppearance.AppCompat.Small"
-                      android:layout_width="0dp"
-                      android:gravity="center"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:layout_margin="5dp"
-                  />
-
-                  <View
-                      android:layout_width="1dp"
-                      android:layout_height="match_parent"
-                      android:background="#c0c0c0"
-                      app:layout_constraintTop_toBottomOf="@+id/ivSongPreview"/>
-
-
-                  <androidx.appcompat.widget.AppCompatTextView
-                      android:id="@+id/tvCollectionPrice"
-                      style="@style/TextAppearance.AppCompat.Small"
-                      android:layout_width="0dp"
-                      android:layout_weight="1"
-                      android:gravity="center"
-                      android:layout_height="wrap_content"
-                      android:layout_margin="5dp"
-                     />
-
-                  <View
-                      android:layout_width="1dp"
-                      android:layout_height="match_parent"
-                      android:background="#c0c0c0"
-                      app:layout_constraintTop_toBottomOf="@+id/ivSongPreview"/>
-
-
-                  <androidx.appcompat.widget.AppCompatTextView
-                      android:id="@+id/tvSongTrackPrice"
-                      style="@style/TextAppearance.AppCompat.Small"
-                      android:layout_width="0dp"
-                      android:layout_weight="1"
-                      android:gravity="center"
-                      android:layout_height="wrap_content"
-                      android:layout_margin="5dp"
-                       />
-
-
-              </LinearLayout>
-
-              <View
-                  android:layout_width="match_parent"
-                  android:layout_height="1dp"
-                  android:background="#c0c0c0"
-                  app:layout_constraintTop_toBottomOf="@+id/ivSongPreview"/>
-
-              <androidx.appcompat.widget.AppCompatTextView
-                  android:id="@+id/tvSongReleaseDate"
-                  style="@style/TextAppearance.AppCompat.Small"
-                  android:layout_width="match_parent"
-                  android:gravity="center"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="15dp"
-                  />
-
-          </LinearLayout>
+        </FrameLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

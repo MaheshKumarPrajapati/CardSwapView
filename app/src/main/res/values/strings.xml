@@ -2,9 +2,11 @@
     <string name="app_name">TaskAndroid</string>
     <string name="tab_text_1">Video</string>
     <string name="tab_text_2">History</string>
-    <string name="song_name">Song Name:</string>
-    <string name="artist">Artist:</string>
-    <string name="collection">Collection:</string>
+    <string name="person_gender">Gender:</string>
+    <string name="person_email">Email Id:</string>
+    <string name="person_phone">Phone No:</string>
+    <string name="person_age">Birthday and Age:</string>
+    <string name="complete_address">Complete Address:</string>
     <string name="duration">Duration</string>
     <string name="collection_price">Collection Price</string>
     <string name="track_price">Track Price</string>
@@ -16,4 +18,8 @@
     <string name="close_drawer">Close drawer</string>
     <string name="reload">Reload</string>
     <string name="history">History</string>
+    <string name="all">All</string>
+    <string name="selected">Selected</string>
+    <string name="rejected">Rejected</string>
+    <string name="map_box_key">pk.eyJ1IjoibGUzNCIsImEiOiJjancwYzEybDcwOHNlM3psa2VwcXRiZXpjIn0.CD6QAp7WubFJFbu3oMqxhQ</string>
 </resources>
