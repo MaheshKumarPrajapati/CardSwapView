@@ -59,6 +59,9 @@ class CardActivity : AppCompatActivity(){
     }
 
     override fun onBackPressed() {
+        if(getFragmentRefreshListener()!=null){
+            getFragmentRefreshListener()!!.onRefresh();
+        }
         super.onBackPressed()
     }
 

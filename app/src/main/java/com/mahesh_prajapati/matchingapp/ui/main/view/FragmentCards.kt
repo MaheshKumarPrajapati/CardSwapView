@@ -23,6 +23,10 @@ import com.mahesh_prajapati.matchingapp.ui.main.viewmodel.MainViewModel
 import com.mahesh_prajapati.matchingapp.utils.SpotDiffCallback
 import com.mahesh_prajapati.matchingapp.utils.Status
 import kotlinx.android.synthetic.main.fragment_cards.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.lang.Thread.sleep
 
 class FragmentCards : Fragment(), CardStackListener {
 
@@ -146,7 +150,15 @@ class FragmentCards : Fragment(), CardStackListener {
                         resource.data?.let { songs ->
                             list = viewModel.filterList(songs)
                         }
-                       setUpDataToList()
+                        if(list.isNotEmpty()){
+                            setUpDataToList()
+                        }else{
+                            GlobalScope.launch(Dispatchers.Main) {
+                                sleep(500)
+                                getDataFromDB()
+                            }
+                        }
+
 
                     }
                     Status.ERROR -> {

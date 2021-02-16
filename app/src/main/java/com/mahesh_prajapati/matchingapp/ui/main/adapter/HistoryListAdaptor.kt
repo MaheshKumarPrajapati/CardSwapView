@@ -2,6 +2,7 @@ package com.mahesh_prajapati.matchingapp.ui.main.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,13 @@ class HistoryListAdaptor (
             itemView.apply {
                 tvPersonName.text = "${card.name!!.title} ${card.name.first} ${card.name.last} "
                 tvPersonLocation.text ="${card.location!!.city}, ${card.location!!.state}, ${card.location.country}"
-                tvPersonAge.text = "${card.dob!!.age} ${"Years"}  ${if(card.selectVal==1){"selected"}else if(card.selectVal==-1){"Not Selected"}else {""}}"
+                var text="${card.dob!!.age} ${"Years"}"
+                if(card.selectVal==1){
+                    text="<font>${card.dob!!.age} ${"Years"}</font>     <font color=#00ff00>${context.getString(R.string.selected)}</font>"
+                }else if(card.selectVal==-1){
+                    text="<font>${card.dob!!.age} ${"Years"}</font>     <font color=#ff0000>${context.getString(R.string.rejected)}</font>"
+                }
+                tvPersonAge.text =(Html.fromHtml(text))
                 Glide.with(ivCardImage.context)
                     .load(card.picture!!.medium)
                     .into(ivCardImage)
