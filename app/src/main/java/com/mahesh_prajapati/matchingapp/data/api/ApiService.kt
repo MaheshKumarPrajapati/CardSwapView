@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface ApiService {
     @GET("api/?results=30")
-    suspend fun getItunesSongs(): CandidateResponse
+    suspend fun getCandidates(): CandidateResponse
 }
